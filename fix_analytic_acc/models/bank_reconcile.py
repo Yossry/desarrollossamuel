@@ -22,12 +22,16 @@ class AccountBankStatement(models.Model):
         _logger.warning("---------------------------------------")
         _logger.warning("Enters validate")
 
-        # for line in self.line_ids:
-        #     ca = line.move_id.line_ids[1].analytic_account_id
-        #     for item in line.move_id.line_ids:
-        #         _logger.warning(f"From: {item.analytic_account_id}")
-        #         _logger.warning(f"To: {ca}")
-        #         item.analytic_account_id = ca
+        for line in self.line_ids:
+            ca = next(item.analytic_account_id for item in line.move_id.line_ids if item.analytic_account_id)
+            if ca:
+                for item in line.move_id.line_ids:
+                    _logger.warning(f"From: {item.analytic_account_id}")
+                    _logger.warning(f"To: {ca}")
+                    if not item.analytic_account_id:
+                        item.analytic_account_id = ca
+            else:
+                _logger.warning("There is no analytic account found in the move!")
 
         if any(statement.state != 'posted' or not statement.all_lines_reconciled for statement in self):
             raise UserError(_('All the account entries lines must be processed in order to validate the statement.'))
