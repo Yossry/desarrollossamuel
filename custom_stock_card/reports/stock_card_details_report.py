@@ -343,7 +343,7 @@ def get_values_custom(self, data):
     datas = {}
     datas['warehouse'] = data['warehouse_name']
     datas['location'] = data['location_name']
-    datas['all_location'] = data['all_location']
+    datas['all_locations'] = data['all_locations']
     datas['date_from'] = start
     datas['date_to'] = end
     datas['details'] = data['details']

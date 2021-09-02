@@ -54,7 +54,7 @@ class StockCardWizard(models.TransientModel):
         datas['start'] = self.date_start
         datas['end'] = self.date_end
         datas['location_id'] = location.id if location else False
-        datas['all_location'] = self.all_locations
+        datas['all_locations'] = self.all_locations
         datas['group_by_serial'] = self.group_by_serial
         datas['group_by_category'] = self.group_by_category
         datas['filter_by'] = self.filter_by
