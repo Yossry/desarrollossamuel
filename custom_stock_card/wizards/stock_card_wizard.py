@@ -38,11 +38,12 @@ class StockCardWizard(models.TransientModel):
         location = self.location_id
         warehouse = None
         warehouses = self.env['stock.warehouse'].search([])
-        for war in warehouses:
-            wlocation = war.view_location_id
-            if location.parent_path.startswith(wlocation.parent_path):
-                warehouse = war
-                break
+        if location:
+            for war in warehouses:
+                wlocation = war.view_location_id
+                if location.parent_path.startswith(wlocation.parent_path):
+                    warehouse = war
+                    break
 
         context = self.env.context
         is_excel = context.get("xls_export", False)
