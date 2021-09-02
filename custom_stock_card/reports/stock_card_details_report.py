@@ -157,10 +157,14 @@ def get_line_sn_custom(self, mvl_in_pro, mvl_out_pro, is_zero, location_id, star
     line_sn['value_si'] = price_start * (actual_qty - tot_in + tot_out)
     line_sn['value_fi'] = price_end * actual_qty
 
-    location = self.env['stock.location'].browse(location_id)
-    location_ids = self.env['stock.location'].search([
-        ('parent_path', '=like', location.parent_path + "%")])
-
+    if location_id:
+        location = self.env['stock.location'].browse(location_id)
+        location_ids = self.env['stock.location'].search([
+            ('parent_path', '=like', location.parent_path + "%")])
+    else:
+        location_ids = self.env['stock.location'].search([
+            ('usage', '=', "internal")
+        ])
     move_to_show = self.env['stock.move.line']
     move_to_show |= mvl_in_pro
     move_to_show |= mvl_out_pro
