@@ -63,7 +63,7 @@ class StockCardWizard(models.TransientModel):
         datas['products'] = self.products.mapped('id')
         datas['products_name'] = ','.join(self.products.mapped('name'))
         datas['location_name'] = location.location_id.name or location.name
-        datas['warehouse_name'] = warehouse.name
+        datas['warehouse_name'] = warehouse.name if warehouse else ""
         datas['details'] = self.details
         datas['is_zero'] = self.is_zero
         datas['show_cost'] = self.show_cost
