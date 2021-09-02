@@ -454,7 +454,7 @@ class StockCardDetailsReport(models.AbstractModel):
 
     def _get_report_values(self, docids, data=None):
         location = self.env['stock.location'].browse(data['location_id'])
-        company = location.company_id or self.env.company.id
+        company = location.company_id or self.env.company
         return {'doc_ids': docids, 'data': get_values_custom(self, data), 'company': company}
 
 
