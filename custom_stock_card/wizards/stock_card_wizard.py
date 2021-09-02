@@ -15,6 +15,13 @@ ERREUR_FUSEAU = _("Set your timezone in preferences")
 class StockCardWizard(models.TransientModel):
     _inherit = "wizard.stock_card_wizard"
 
+    all_locations = fields.Boolean(
+        string="Todas las ubicaciones",
+        default=False)
+
+    location_id = fields.Many2one(
+        required=False)
+
     @api.model
     def convert_UTC_TZ(self, UTC_datetime):
         if not self.env.user.tz:
@@ -45,7 +52,8 @@ class StockCardWizard(models.TransientModel):
         datas['date_end'] = self.convert_UTC_TZ(self.date_end)
         datas['start'] = self.date_start
         datas['end'] = self.date_end
-        datas['location_id'] = location.id
+        datas['location_id'] = location.id if location else False
+        datas['all_location'] = self.all_locations
         datas['group_by_serial'] = self.group_by_serial
         datas['group_by_category'] = self.group_by_category
         datas['filter_by'] = self.filter_by

@@ -20,7 +20,7 @@
         # 'views/action_manager.xml',
 
         # # wizards
-        # 'wizards/stock_card_wizard_views.xml'
+        'wizards/stock_card_wizard_views.xml'
     ],
     'demo': [],
 }

@@ -32,22 +32,43 @@ def get_products_and_move_ordered(self, location_id, start, end, filter_by,
     quant_obj = self.env["stock.quant"]
 
     # domains
-    quant_domain = [('location_id', 'child_of', location_id)]
+    
+
+    quant_domain = []
     moves_domain = [
         ('picking_force_date', '>=', start),
         ('picking_force_date', '<=', end),
         ('state', '=', 'done'),
-        '|',
-        ('location_dest_id', 'child_of', location_id),
-        ('location_id', 'child_of', location_id)]
+    ]
 
     moves_domain2 = [
         ('date', '>=', start),
         ('date', '<=', end),
         ('state', '=', 'done'),
-        '|',
-        ('location_dest_id', 'child_of', location_id),
-        ('location_id', 'child_of', location_id)]
+    ]
+    location_ids = []
+
+    if location_id:
+        quant_domain = [('location_id', 'child_of', location_id)]
+        moves_domain = [
+            ('picking_force_date', '>=', start),
+            ('picking_force_date', '<=', end),
+            ('state', '=', 'done'),
+            '|',
+            ('location_dest_id', 'child_of', location_id),
+            ('location_id', 'child_of', location_id)]
+
+        moves_domain2 = [
+            ('date', '>=', start),
+            ('date', '<=', end),
+            ('state', '=', 'done'),
+            '|',
+            ('location_dest_id', 'child_of', location_id),
+            ('location_id', 'child_of', location_id)]
+        
+        location = self.env['stock.location'].browse(location_id)
+        location_ids = self.env['stock.location'].search([
+            ('parent_path', '=like', location.parent_path + "%")])
 
     if filter_by == 'product' and filter_products:
         quant_domain.append(('product_id', 'in', filter_products))
@@ -63,10 +84,10 @@ def get_products_and_move_ordered(self, location_id, start, end, filter_by,
     moves = self.env['stock.move'].search(moves_domain, order="product_reference asc, date desc")
     moves |= self.env['stock.move'].search(moves_domain2, order="product_reference asc, date desc")
     
-
-    location = self.env['stock.location'].browse(location_id)
-    location_ids = self.env['stock.location'].search([
-        ('parent_path', '=like', location.parent_path + "%")])
+    if not location_ids:
+        location_ids = self.env['stock.location'].search([
+            ('usage', '=', "internal")
+        ])
 
     mv_in = moves.filtered(
         lambda x: x.location_dest_id.id in location_ids.ids)

@@ -35,7 +35,14 @@
                     	<tbody>
                     		<tr>
                     			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><b>Almacén</b></td>
-                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><span t-esc="data['warehouse']"/>: <span t-esc="data['location']"/></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2">
+									<t t-if="data['all_locations']">
+										<span> Todos</span>
+									</t>
+									<t t-if="not data['all_locations']">
+										<span t-esc="data['warehouse']"/>: <span t-esc="data['location']"/>
+									</t>
+								</td>
                     		</tr>
                     		<!--<tr>
                     			<t t-if="data['filter_title_label']">
