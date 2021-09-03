@@ -67,8 +67,8 @@
                             <th>Cuenta Analítica</th>
                             <th>Impuestos(%)</th>
                             <th>Importe Moneda</th>
-                            <th>Débito</th>
-                            <th>Crédito</th>
+                            <th style="width: 8%">Débito</th>
+                            <th style="width: 8%">Crédito</th>
                         </tr>
                     </thead>  
                     <tbody class="consumed_tbody">
