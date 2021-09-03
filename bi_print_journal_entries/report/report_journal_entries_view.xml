@@ -116,10 +116,10 @@
                             <td></td>
                             <td><strong>Total:</strong></td>
                             <td width="10%"><strong>
-                                <span><t t-esc="total"/></span>
+                                <span><t t-esc="total" t-options="{'widget': 'monetary'}"/></span>
                             </strong></td>
                              <td width="10%"><strong>
-                                <span><t t-esc="total1"/></span>
+                                <span><t t-esc="total1" t-options="{'widget': 'monetary'}"/></span>
                             </strong></td>
                       </tr>
                     </tbody>
