@@ -116,10 +116,10 @@
                             <td></td>
                             <td><strong>Total:</strong></td>
                             <td width="10%"><strong>
-                                <span><t t-esc="formatLang(total, digits=2)"/></span>
+                                <span><t t-esc="total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}}"/></span>
                             </strong></td>
                              <td width="10%"><strong>
-                                <span><t t-esc="formatLang(total1, digits=2)"/></span>
+                                <span><t t-esc="total1" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}}"/></span>
                             </strong></td>
                       </tr>
                     </tbody>
